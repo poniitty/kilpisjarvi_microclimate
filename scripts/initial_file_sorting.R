@@ -1,3 +1,7 @@
+##########################################################################
+# THIS CODE MAKES SOME QUALITY CHECKS IF THE SITE AND TOMST IDs LOOKS FINE
+#
+
 library(tidyverse)
 
 # List binary and command files to be removed from repository if also data file exists
@@ -40,13 +44,15 @@ for(i in dirs){
 
 ###########################################################################
 # Check Tomst ID-numbers from last year data
-maxdt <- read_csv("data/reading_times_2020.csv")
+maxdt <- bind_rows(read_csv("data/reading_times_2020_AIL.csv") %>% mutate(site = unlist(lapply(site, function(x) paste0("AIL", add_zeros(x))))),
+                   read_csv("data/reading_times_2020_MAL.csv") %>% mutate(site = unlist(lapply(site, function(x) paste0("MAL", add_zeros(x))))),
+                   read_csv("data/reading_times_2020_SAA.csv") %>% mutate(site = unlist(lapply(site, function(x) paste0("SAA", add_zeros(x))))))
 
 f <- list.files("data", pattern = "data_", recursive = T, full.names = T)
 
 fi <- data.frame(file = f)
 
-fi$site <- unlist(lapply(fi$file, function(x) as.numeric(gsub("RL","",strsplit(x, "/")[[1]][3]))))
+fi$site <- toupper(unlist(lapply(fi$file, function(x) strsplit(x, "/")[[1]][3])))
 
 fi <- fi[order(fi$site),]
 
@@ -55,29 +61,29 @@ fi$tomst_id <- unlist(lapply(fi$file, function(x) as.numeric(strsplit(gsub("data
 fi %>% group_by(tomst_id) %>% summarise(n = n()) %>% filter(n > 1) %>% pull(tomst_id) -> doubled_ids
 fi %>% filter(tomst_id %in% doubled_ids) # check for weird things!!! Good if none
 
-# 94194288 occurs in two folders
-maxdt %>% filter(tomst_id == 94194288)
-# Based on year 2020 data the site 104 is correct
-# Thus I erase the file in 77 folder
-unlink("data/tomst/RL77/data_94194288_0.csv")
-fi <- fi %>% filter(file != "data/tomst/RL77/data_94194288_0.csv")
-fi %>% group_by(tomst_id) %>% summarise(n = n()) %>% filter(n > 1) %>% pull(tomst_id) -> doubled_ids
-fi %>% filter(tomst_id %in% doubled_ids) # check for weird things!!! Good if none
-# No more duplicates
-
 # Check if more than one data file in a folder
 fi %>% group_by(site) %>% summarise(n = n()) %>% filter(n > 1) %>% pull(site) -> doubled_sites
 fi %>% filter(site %in% doubled_sites) # check for weird things!!! Good if none
-# Site 15 has two files with different tomst ids
-maxdt %>% filter(tomst_id == 94184843)
-maxdt %>% filter(tomst_id == 94194307)
-# Based on 2020 data tomst id 94194307 is real site 15
-# And 94184843 belongs to site 71
-fi %>% filter(site == 71) # And there is no 2021 data for site 71
-# Thus I copy the 94184843 data to 71 folder
-file.copy(paste0(getwd(), "/data/tomst/RL15/data_94184843_0.csv"),
-          paste0(getwd(), "/data/tomst/RL71/data_94184843_0.csv"))
-unlink("data/tomst/RL15/data_94184843_0.csv")
+# Sites SAA1105 and SAA343 has two files with different tomst ids
+maxdt %>% filter(tomst_id == 94181319)
+maxdt %>% filter(tomst_id == 94181620)
+# Based on 2020 data tomst id 94181620 is real site SAA1105
+# And 94181319 belongs to site SAA1057
+fi %>% filter(site == "SAA1057") # And there is no 2021 data for site SAA1057
+# Thus I copy the 94181319 data to SAA1057 folder
+file.copy(paste0(getwd(), "/data/tomst/SAA1105/data_94181319_0.csv"),
+          paste0(getwd(), "/data/tomst/SAA1057/data_94181319_0.csv"))
+unlink("data/tomst/SAA1105/data_94181319_0.csv")
+
+maxdt %>% filter(tomst_id == 94181308)
+maxdt %>% filter(tomst_id == 94181311)
+# Based on 2020 data tomst id 94181308 is real site SAA343
+# And 94181311 belongs to site SAA103
+fi %>% filter(site == "SAA103") # And there is no 2021 data for site SAA103
+# Thus I copy the 94181311 data to SAA103 folder
+file.copy(paste0(getwd(), "/data/tomst/SAA343/data_94181311_0.csv"),
+          paste0(getwd(), "/data/tomst/SAA103/data_94181311_0.csv"))
+unlink("data/tomst/SAA343/data_94181311_0.csv")
 
 ###########################################################################
 # Update the file list
@@ -86,7 +92,7 @@ f <- list.files("data", pattern = "data_", recursive = T, full.names = T)
 
 fi <- data.frame(file = f)
 
-fi$site <- unlist(lapply(fi$file, function(x) as.numeric(gsub("RL","",strsplit(x, "/")[[1]][3]))))
+fi$site <- toupper(unlist(lapply(fi$file, function(x) strsplit(x, "/")[[1]][3])))
 
 fi <- fi[order(fi$site),]
 
@@ -107,30 +113,52 @@ all <- full_join(fi, maxdt %>% rename(tomst_id_20 = tomst_id))
 all %>% group_by(site) %>% summarise(n = n()) %>% filter(n > 1) %>% pull(site) -> doubled_sites
 all %>% filter(site %in% doubled_sites) # No, Good!
 
-# Non-matching sites
-all %>% filter(!complete.cases(.))
+# Non-matching sites, Exclude RA sites which were started in 2020
+all %>% filter(!complete.cases(.)) %>% filter(!grepl("RA",site))
 
-# site 12 in 2021 but not in 2020
-all %>% filter(tomst_id_20 == 94184856) # No such Tomst ids in 2020 so this is fine!
+# site AIL107 in 2021 but not in 2020
+all %>% filter(tomst_id_20 == 94194047) # No such Tomst ids in 2020 so this is fine!
+# site AIL117 in 2021 but not in 2020
+all %>% filter(tomst_id_20 == 94194045) # No such Tomst ids in 2020 so this is fine!
 
-#sites 68 and 110 in 2020 data but not in 2021
-all %>% filter(tomst_id == 94194306) # No such Tomst ids in 2021 so this is fine!
-all %>% filter(tomst_id == 94184848) # No such Tomst ids in 2021 so this is fine!
+#sites AIL105, AIL108, MAL042, MAL092 and SAA1195 in 2020 data but not in 2021
+all %>% filter(tomst_id == 94194176) # No such Tomst ids in 2021 so this is fine!
+all %>% filter(tomst_id == 94194028) # No such Tomst ids in 2021 so this is fine!
+all %>% filter(tomst_id == 94194142) # No such Tomst ids in 2021 so this is fine!
+all %>% filter(tomst_id == 94194157) # No such Tomst ids in 2021 so this is fine!
+all %>% filter(tomst_id == 94181612) # No such Tomst ids in 2021 so this is fine!
 
-# For sites 68 and 110 find 2020 data and copy to repository
-f2 <- list.files("C:/Users/OMISTAJA/OneDrive - University of Helsinki/R_Projects/microclim_suomi/raw_field_data/rastigaisa",
+# For sites AIL105, AIL108, MAL042, MAL092 and SAA1195 find 2020 data and copy to repository
+f2 <- list.files("C:/Users/OMISTAJA/OneDrive - University of Helsinki/R_Projects/microclim_suomi/raw_field_data",
                  pattern = "data_", recursive = T, full.names = T)
 
-# Copy site 110 data from last year data
-f2[grepl("/RL110_20/", f2)]
-file.copy(f2[grepl("/RL110_20/", f2)],
-          paste0(getwd(), "/data/tomst/RL110/data_94184848_0.csv"))
+# Copy site AIL105 data from last year data
+f2[grepl("/ailakka/tomst/105", f2)]
+dir.create(paste0(getwd(), "/data/tomst/ail105"))
+file.copy(f2[grepl("/ailakka/tomst/105", f2)],
+          paste0(getwd(), "/data/tomst/ail105/data_94194176_0.csv"))
 
-# Copy site 68 data from last year data
-f2[grepl("/RL68_20/", f2)]
-dir.create(paste0(getwd(), "/data/tomst/RL68"))
-file.copy(f2[grepl("/RL68_20/", f2)],
-          paste0(getwd(), "/data/tomst/RL68/data_94194306_0.csv"))
+# Copy site AIL108 data from last year data
+f2[grepl("/ailakka/tomst/108", f2)]
+dir.create(paste0(getwd(), "/data/tomst/ail108"))
+file.copy(f2[grepl("/ailakka/tomst/108", f2)],
+          paste0(getwd(), "/data/tomst/ail108/data_94194028_0.csv"))
+
+# Copy site MAL042 data from last year data
+f2[grepl("/malla/tomst/042", f2)]
+dir.create(paste0(getwd(), "/data/tomst/mal042"))
+file.copy(f2[grepl("/malla/tomst/042", f2)],
+          paste0(getwd(), "/data/tomst/mal042/data_94194142_0.csv"))
+
+# Copy site MAL092 data from last year data
+f2[grepl("/malla/tomst/092", f2)]
+file.copy(f2[grepl("/malla/tomst/092", f2)],
+          paste0(getwd(), "/data/tomst/mal092/data_94194157_0.csv"))
+
+# Copy site SAA1195 data from last year data
+f2[grepl("94181612", f2)]
+file.copy(f2[grepl("94181612", f2)],
+          paste0(getwd(), "/data/tomst/SAA1195/data_94181612_1.csv"))
 
 
 ########################################################################################
@@ -140,7 +168,7 @@ f <- list.files("data", pattern = "data_", recursive = T, full.names = T)
 
 fi <- data.frame(file = f)
 
-fi$site <- unlist(lapply(fi$file, function(x) as.numeric(gsub("RL","",strsplit(x, "/")[[1]][3]))))
+fi$site <- toupper(unlist(lapply(fi$file, function(x) strsplit(x, "/")[[1]][3])))
 
 fi <- fi[order(fi$site),]
 
