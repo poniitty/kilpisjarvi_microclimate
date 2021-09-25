@@ -44,9 +44,7 @@ fi <- fi[order(fi$site),]
 
 fi$tomst_id <- unlist(lapply(fi$file, function(x) as.numeric(strsplit(gsub("data_","",strsplit(x, "/")[[1]][4]), "_")[[1]][1])))
 
-df <- data.frame()
-for(i in unique(fi$file2)){
-  #i <- "data/tomst/RL1/data_94184805"
+readdata <- function(i){
   nn <- sum(grepl(i, fi$file2))
   
   if(nn > 1){
@@ -62,14 +60,20 @@ for(i in unique(fi$file2)){
       
       d %>% filter(!duplicated(.$V2, fromLast = T)) -> d
       
-      df2 <- rbind.data.frame(df2, d)
+      df2 <- bind_rows(df2, d)
     }
     
     df2 %>% filter(!duplicated(.$V2, fromLast = T)) -> df2
     
     df2$site <- fi[which(fi$file2 == ii),"id"]
     
-    df <- rbind.data.frame(df, df2)
+    df2 %>% mutate(across(V4:V6, ~as.numeric(gsub(",",".\\",.)))) -> df2
+    
+    df2 %>% mutate(V2 = ymd_hm(V2, tz = "UTC")) %>% 
+      mutate(V2 = with_tz(V2, tzone = "Etc/GMT-2")) -> df2
+    
+    
+    return(df2)
     
   } else {
     
@@ -80,13 +84,22 @@ for(i in unique(fi$file2)){
     
     d %>% filter(!duplicated(.$V2, fromLast = T)) -> d
     
+    d %>% mutate(across(V4:V6, ~as.numeric(gsub(",",".\\",.)))) -> d
+    
     d$site <- fi[which(fi$file2 == i),"site"]
     
-    df <- rbind.data.frame(df, d)
+    d %>% mutate(V2 = ymd_hm(V2, tz = "UTC")) %>% 
+      mutate(V2 = with_tz(V2, tzone = "Etc/GMT-2")) -> d
+    
+    return(d)
     
   }
   
 }
+
+
+mylist <- lapply(fi$file2, readdata)
+df <- rbindlist( mylist )
 
 # Rename columns
 df %>% rename(datetime = V2,
@@ -95,9 +108,6 @@ df %>% rename(datetime = V2,
               T2 = V5,
               T3 = V6,
               moist = V7) -> df
-
-df %>% mutate(datetime = ymd_hm(datetime, tz = "UTC")) %>% 
-  mutate(datetime = with_tz(datetime, tzone = "Etc/GMT-2")) -> df
 
 df %>% arrange(site, datetime) -> df
 
@@ -117,8 +127,6 @@ fwrite(maxdt, "data/reading_times_2021.csv")
 full_join(df, maxdt20 %>% select(-tomst_id) %>% mutate(visit = 1) %>% rename(datetime = maxdt)) %>% 
   mutate(across(T1:moist, ~ifelse(is.na(visit), ., NA))) %>%
   select(-visit) -> df
-
-df %>% mutate(across(T1:moist, ~as.numeric(gsub(",",".\\",.)))) -> df
 
 ############################################################################
 # PLOTTINGS
