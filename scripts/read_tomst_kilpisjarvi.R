@@ -3606,7 +3606,7 @@ df2 %>% mutate(probl = ifelse(site == siteid &
 # SITE = RA003
 siteid <- "RA003"
 
-office <- c(as_date(as_date(min(df$datetime)):as_date("2019-08-12")))
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-19")))
 probls <- c()
 hattu <- c()
 
@@ -3619,8 +3619,1322 @@ df2 %>% mutate(probl = ifelse(site == siteid &
   mutate(probl = ifelse(site == siteid &
                           date %in% hattu,
                         3, probl)) -> df2
+# SITE = RA007
+siteid <- "RA007"
 
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-19")))
+probls <- c()
+hattu <- c()
 
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA009
+siteid <- "RA009"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-20")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA010
+siteid <- "RA010"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-20")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA011
+siteid <- "RA011"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-20")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA013
+siteid <- "RA013"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c(as_date(as_date("2021-08-05"):as_date("2021-08-10")))
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA014
+siteid <- "RA014"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA015
+siteid <- "RA015"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA016
+siteid <- "RA016"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-27")))
+probls <- c(as_date(as_date("2021-05-31"):as_date("2021-08-24")))
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA017
+siteid <- "RA017"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-06")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA021
+siteid <- "RA021"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA022
+siteid <- "RA022"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA025
+siteid <- "RA025"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-06")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA027
+siteid <- "RA027"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c(as_date(as_date("2020-09-17"):as_date("2021-07-27")))
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA028
+siteid <- "RA028"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA029
+siteid <- "RA029"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-05")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA030
+siteid <- "RA030"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-05")))
+probls <- c(as_date(as_date("2021-08-22"):as_date("2021-08-28")))
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA031
+siteid <- "RA031"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA032
+siteid <- "RA032"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA033
+siteid <- "RA033"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA034
+siteid <- "RA034"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA035
+siteid <- "RA035"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA036
+siteid <- "RA036"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA037
+siteid <- "RA037"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA038
+siteid <- "RA038"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA039
+siteid <- "RA039"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA040
+siteid <- "RA040"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA041
+siteid <- "RA041"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA042
+siteid <- "RA042"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA043
+siteid <- "RA043"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-22")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA044
+siteid <- "RA044"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA045
+siteid <- "RA045"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA046
+siteid <- "RA046"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA047
+siteid <- "RA047"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA048
+siteid <- "RA048"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA049
+siteid <- "RA049"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA050
+siteid <- "RA050"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA051
+siteid <- "RA051"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA052
+siteid <- "RA052"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA053
+siteid <- "RA053"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA054
+siteid <- "RA054"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-23")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA055
+siteid <- "RA055"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA057
+siteid <- "RA057"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA058
+siteid <- "RA058"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA059
+siteid <- "RA059"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA060
+siteid <- "RA060"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA061
+siteid <- "RA061"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")),
+            as_date(as_date("2021-07-24"):as_date("2021-08-02")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA062
+siteid <- "RA062"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-24")),
+            as_date(as_date("2021-07-24"):as_date("2021-08-02")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA063
+siteid <- "RA063"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA064
+siteid <- "RA064"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA065
+siteid <- "RA065"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA066
+siteid <- "RA066"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA067
+siteid <- "RA067"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA068
+siteid <- "RA068"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-25")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA069
+siteid <- "RA069"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-26")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA070
+siteid <- "RA070"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-26")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA071
+siteid <- "RA071"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-26")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA072
+siteid <- "RA072"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-26")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA073
+siteid <- "RA073"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-27")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA074
+siteid <- "RA074"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-27")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA075
+siteid <- "RA075"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-27")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA076
+siteid <- "RA076"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-27")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA077
+siteid <- "RA077"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-28")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA078
+siteid <- "RA078"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-28")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA079
+siteid <- "RA079"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-28")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA080
+siteid <- "RA080"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-28")),
+            as_date(as_date("2021-07-30"):as_date("2021-08-02")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA081
+siteid <- "RA081"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA082
+siteid <- "RA082"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")),
+            as_date(as_date("2021-07-26"):as_date("2021-08-02")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA083
+siteid <- "RA083"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA084
+siteid <- "RA084"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA085
+siteid <- "RA085"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA086
+siteid <- "RA086"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-07-29")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA087
+siteid <- "RA087"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA088
+siteid <- "RA088"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA089
+siteid <- "RA089"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA090
+siteid <- "RA090"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA091
+siteid <- "RA091"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA092
+siteid <- "RA092"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA093
+siteid <- "RA093"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA094
+siteid <- "RA094"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA095
+siteid <- "RA095"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA096
+siteid <- "RA096"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-04")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
+# SITE = RA101
+siteid <- "RA101"
+
+office <- c(as_date(as_date(min(df$datetime)):as_date("2020-08-14")))
+probls <- c()
+hattu <- c()
+
+df2 %>% mutate(probl = ifelse(site == siteid &
+                                date %in% office,
+                              2, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% probls,
+                        1, probl)) %>% 
+  mutate(probl = ifelse(site == siteid &
+                          date %in% hattu,
+                        3, probl)) -> df2
 ########################################################################
 # MASK IMPOSSIBLE VALUES
 df %>% mutate(T1 = ifelse(T1 < (-50) | T1 > 50, NA, T1),
