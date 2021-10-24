@@ -1175,7 +1175,7 @@ for(i in unique(df4$site)){
   
   temp$site <- i
   
-  df5 <- bind_rows(df5, temp %>% select(site, roundtime, at, arh, hobo_probl, md))
+  df5 <- bind_rows(df5, temp %>% select(site, roundtime, at, arh, hobo_probl))
   
 }
 
@@ -1350,7 +1350,7 @@ for(i in unique(df4$site)){
   
   temp$site <- i
   
-  df7 <- bind_rows(df7, temp %>% select(site, roundtime, at, arh, haxo_probl, md))
+  df7 <- bind_rows(df7, temp %>% select(site, roundtime, at, arh, haxo_probl))
   
 }
 
@@ -1393,7 +1393,6 @@ for(i in unique(df7$site)){
 }
 dev.off()
 
-
-fwrite(df7 %>% select(-md), "output/haxo_data_corrected.csv")
+fwrite(df7, "output/haxo_data_corrected.csv")
 
 
