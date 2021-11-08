@@ -74,7 +74,6 @@ fi <- fi %>% arrange(site)
 fi %>% filter(!site %in% maxdt20$site) # Good if none
 fi %>% filter(!site %in% maxdt21$site) # Good if none
 
-
 readHOBO <- function(i){
   
   print(i)
@@ -85,6 +84,9 @@ readHOBO <- function(i){
   names(d) <- c("datetime", "at", "arh")
   
   d %>% filter(!(is.na(at) & is.na(arh))) -> d
+  
+  d %>% mutate(datetime = gsub(" ap.", " am", datetime),
+               datetime = gsub(" ip.", " pm", datetime)) -> d
   
   d$site <- fi[which(fi$file == i),"site"]
   
@@ -113,14 +115,11 @@ full_join(df, maxdt21 %>% select(site, maxdt)) %>%
   filter(datetime < maxdt) %>%
   select(-maxdt) -> df
 
-sites <- unique(df$site)
-
 df %>% mutate(roundtime = round_date(datetime, "30 minutes")) -> df
 
 df %>% group_by(roundtime) %>% 
   summarise(med_at = median(at, na.rm = T),
             med_arh = median(arh, na.rm = T)) -> meds
-
 
 df <- full_join(df, meds)
 
@@ -205,22 +204,22 @@ daily %>% mutate(hobo_probl = 0) -> daily
 # AIL178
 site_id <- "AIL178"
 daterange <- c("2020-12-01","2021-01-31")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_at"), col = "black") +
-  geom_line(aes_string(y = "at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_arh"), col = "black") +
-  geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_at"), col = "black") +
+#   geom_line(aes_string(y = "at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_arh"), col = "black") +
+#   geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
 
 daily %>% 
   mutate(hobo_probl = ifelse(site == site_id & date > "2021-01-10", 1, hobo_probl)) -> daily
@@ -228,22 +227,22 @@ daily %>%
 # AIL183
 site_id <- "AIL183"
 daterange <- c("2021-02-01","2021-04-01")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_at"), col = "black") +
-  geom_line(aes_string(y = "at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_arh"), col = "black") +
-  geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_at"), col = "black") +
+#   geom_line(aes_string(y = "at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_arh"), col = "black") +
+#   geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
 
 daily %>% 
   mutate(hobo_probl = ifelse(site == site_id & date > "2021-02-18", 1, hobo_probl)) -> daily
@@ -251,22 +250,22 @@ daily %>%
 # AIL184
 site_id <- "AIL184"
 daterange <- c("2021-01-01","2021-03-01")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_at"), col = "black") +
-  geom_line(aes_string(y = "at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
-df %>% filter(site == site_id) %>% 
-  filter(datetime > daterange[1],
-         datetime < daterange[2]) %>% 
-  ggplot(aes_string(x="datetime")) +
-  geom_line(aes_string(y = "med_arh"), col = "black") +
-  geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_at"), col = "black") +
+#   geom_line(aes_string(y = "at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
+# df %>% filter(site == site_id) %>% 
+#   filter(datetime > daterange[1],
+#          datetime < daterange[2]) %>% 
+#   ggplot(aes_string(x="datetime")) +
+#   geom_line(aes_string(y = "med_arh"), col = "black") +
+#   geom_line(aes_string(y = "arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("Temperature") + xlab("Date")
 
 daily %>% 
   mutate(hobo_probl = ifelse(site == site_id & date > "2021-01-10", 1, hobo_probl)) -> daily
@@ -281,68 +280,68 @@ daily %>%
   mutate(cor85_at = ifelse(!is.finite(cor85_at), 0, cor85_at),
          cor85_arh = ifelse(!is.finite(cor85_at), 0, cor85_arh)) -> daily
 
-daily %>% filter(site == "MAL056") -> temp
+# daily %>% filter(site == "MAL056") -> temp
 
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "max_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("max_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "min_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("min_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "sd_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("sd_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "sd_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("sd_arh") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "meansd_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("meansd_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "meansd_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("meansd_arh") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "mean_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("mean_arh") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "min_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("min_arh") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "cor85_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("cor85_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "cor85_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("cor85_arh") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "rollabser_at"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("rollabser_at") + xlab("Date") + ggtitle(unique(temp$site))
-temp %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "rollabser_arh"), col = "cornflowerblue") +
-  theme_minimal() +
-  ylab("rollabser_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "max_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("max_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "min_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("min_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "sd_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("sd_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "sd_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("sd_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "meansd_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("meansd_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "meansd_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("meansd_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "mean_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("mean_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "min_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("min_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "cor85_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("cor85_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "cor85_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("cor85_arh") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "rollabser_at"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("rollabser_at") + xlab("Date") + ggtitle(unique(temp$site))
+# temp %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "rollabser_arh"), col = "cornflowerblue") +
+#   theme_minimal() +
+#   ylab("rollabser_arh") + xlab("Date") + ggtitle(unique(temp$site))
 
 count_consecutives <- function(x){
   
@@ -385,17 +384,17 @@ daily %>% group_by(site) %>%
   mutate(hobo_probl = ifelse(hobo_probl == 0 & lead_probl == 2, 2, hobo_probl)) %>% 
   ungroup() -> daily2
 
-daily2 %>% filter(site == "RA080") %>% 
-  ggplot(aes_string(x="date")) +
-  geom_line(aes_string(y = "mean_at"), col = "cornflowerblue") +
-  geom_point(aes(x = date, y = mean_at),
-             data = daily2 %>% filter(site == "RA080") %>% filter(hobo_probl == 2),
-             col = "red") +
-  geom_point(aes(x = date, y = mean_at),
-             data = daily2 %>% filter(site == "RA080") %>% filter(hobo_probl == 1),
-             col = "black") +
-  theme_minimal() +
-  ylab("min_arh") + xlab("Date")
+# daily2 %>% filter(site == "RA080") %>% 
+#   ggplot(aes_string(x="date")) +
+#   geom_line(aes_string(y = "mean_at"), col = "cornflowerblue") +
+#   geom_point(aes(x = date, y = mean_at),
+#              data = daily2 %>% filter(site == "RA080") %>% filter(hobo_probl == 2),
+#              col = "red") +
+#   geom_point(aes(x = date, y = mean_at),
+#              data = daily2 %>% filter(site == "RA080") %>% filter(hobo_probl == 1),
+#              col = "black") +
+#   theme_minimal() +
+#   ylab("min_arh") + xlab("Date")
 
 df %>% mutate(date = as_date(datetime)) %>% 
   left_join(., daily2 %>% select(site, date, hobo_probl)) -> df2
@@ -455,9 +454,10 @@ d %>% filter(hobo_probl == 0) %>%
             md_arh = median(arh, na.rm = T)) %>% 
   ungroup() -> md
 
+# plot(md$roundtime, md$md)
 df <- data.frame()
 for(i in unique(d$site)){
-  # i <- "AIL178"
+  # i <- "AIL101"
   
   d %>% filter(site == i) -> temp
   
@@ -494,7 +494,6 @@ for(i in unique(d$site)){
     cors[[paste0(mi)]] <- cor1+cor2
   }
   
-  plot(x = cors, type = "l", main = i)
   move_n <- as.numeric(names(which.min(cors)))
   
   if(move_n  != 0){
@@ -1008,7 +1007,7 @@ df3 %>% filter(!is.na(site)) -> df3
 
 df4 <- data.frame()
 for(i in unique(df3$site)){
-  # i <- 77
+  # i <- "MAL012"
   
   print(i)
   print(Sys.time())
@@ -1030,57 +1029,57 @@ for(i in unique(df3$site)){
       
       temp %>% slice(1:(ii-1)) %>% pull(at) %>% rev() -> ats
       
-      gap_length <- which.min(is.na(ats))-1
+      tibble(grps = rleid(is.na(ats))) %>% group_by(grps) %>% count() %>% pull(n) -> part_lengths
       
-      test_df <- expand.grid(data_l = 11:167,
-                             move_l = 1:gap_length,
-                             cor = NA,
-                             abse = NA)
+      gap_length <- part_lengths[1]
+      part_length <- part_lengths[2]
       
-      test_df <- bind_rows(data.frame(data_l = 167,
-                                      move_l = 0,
-                                      cor = NA,
-                                      abse = NA),
-                           test_df)
+      # gap_length <- which.min(is.na(ats))-1
       
-      temp %>% slice(ii:(ii+167)) %>% pull(at) -> att
-      # temp %>% slice(ii:(ii+167)) %>% pull(md) -> mdt
-      # 
-      # test_df[1,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-      # test_df[1,"abse"] <- mean(abs(mdt-att), na.rm = T)
-      
-      maxl <- max(test_df$data_l)
-      
-      for(iii in 1:nrow(test_df)){
+      if(gap_length >= 191 & part_length >= 671){
         
-        if(test_df[iii,"data_l"] == maxl){
-          temp %>% slice((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"])) %>%
-            pull(md) -> mdt
-        } else {
-          temp %>% slice(c((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"]),
-                           (ii+test_df[iii,"data_l"]+1):(ii+167))) %>%
-            pull(md) -> mdt
+        test_df <- expand.grid(data_l = c(seq(671, ifelse(part_length < 2687, part_length, 2687), by = 4), 
+                                          ifelse(part_length < 2687, part_length, 2687)),
+                               move_l = seq(1, gap_length, by = 2))
+        
+        test_df <- bind_rows(data.frame(data_l = ifelse(part_length < 2687, part_length, 2687),
+                                        move_l = 0),
+                             test_df)
+        
+        temp %>% slice(ii:(ii+ifelse(part_length < 2687, part_length, 2687))) %>% pull(at) -> att
+        
+        maxl <- max(test_df$data_l)
+        
+        splitting_cors <- function(iii){
+          if(test_df[iii,"data_l"] == maxl){
+            temp %>% slice((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"])) %>%
+              pull(md) -> mdt
+          } else {
+            temp %>% slice(c((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"]),
+                             (ii+test_df[iii,"data_l"]+1):(ii+ifelse(part_length < 2687, part_length, 2687)))) %>%
+              pull(md) -> mdt
+          }
+          
+          return((1-cor(mdt, att, use = "pairwise.complete.obs"))*mean(abs(mdt-att), na.rm = T))
+          
         }
         
-        test_df[iii,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-        test_df[iii,"abse"] <- mean(abs(mdt-att), na.rm = T)
+        test_df$fac <- unlist(lapply(1:nrow(test_df), splitting_cors))
         
+        test_df %>% pull(fac) %>% which.min() -> result
+        
+        temp %>% pull(at) -> ats
+        move <- ats[ii:(ii+test_df[result,"data_l"])]
+        ats[ii:(ii+test_df[result,"data_l"])] <- NA
+        ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
+        temp$at <- ats
+        
+        temp %>% pull(arh) -> ats
+        move <- ats[ii:(ii+test_df[result,"data_l"])]
+        ats[ii:(ii+test_df[result,"data_l"])] <- NA
+        ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
+        temp$arh <- ats
       }
-      
-      test_df %>% mutate(fac = (1-cor)*abse) %>% pull(fac) %>% which.min() -> result
-      
-      temp %>% pull(at) -> ats
-      move <- ats[ii:(ii+test_df[result,"data_l"])]
-      ats[ii:(ii+test_df[result,"data_l"])] <- NA
-      ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
-      temp$at <- ats
-      
-      temp %>% pull(arh) -> ats
-      move <- ats[ii:(ii+test_df[result,"data_l"])]
-      ats[ii:(ii+test_df[result,"data_l"])] <- NA
-      ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
-      temp$arh <- ats
-      
     }
   }
   
@@ -1096,7 +1095,7 @@ df4 %>% filter(!is.na(site)) -> df4
 
 df5 <- data.frame()
 for(i in unique(df4$site)){
-  # i <- 23
+  # i <- "MAL012"
   
   print(i)
   print(Sys.time())
@@ -1113,34 +1112,32 @@ for(i in unique(df4$site)){
   if(length(splits) > 0){
     for(ii in splits){
       # ii <- 232
-      temp %>% slice((ii+1):nrow(.)) %>% pull(at) -> ats
+      temp %>% slice((ii+1):nrow(.)) %>% pull(at) -> ats_after
+      temp %>% slice(1:ii) %>% pull(at) %>% rev() -> ats_before
       
-      gap_length <- which.min(is.na(ats))-1
+      tibble(grps = rleid(is.na(ats_after))) %>% group_by(grps) %>% count() %>% pull(n) -> gap_lengths
+      tibble(grps = rleid(is.na(ats_before))) %>% group_by(grps) %>% count() %>% pull(n) -> part_lengths
       
-      if(gap_length > 3){
-        maxdata_l <- ifelse(gap_length < 83, gap_length, 83)
+      gap_length <- gap_lengths[1]
+      part_length <- part_lengths[1]
+      
+      if(gap_length >= 95 & part_length >= 671){
         
-        test_df <- expand.grid(data_l = 1:maxdata_l,
-                               move_l = 1:gap_length,
-                               cor = NA,
-                               abse = NA)
+        maxdata_l <- ifelse(part_length < 2687, part_length, 2687)
         
-        test_df <- bind_rows(data.frame(data_l = maxdata_l,
-                                        move_l = 0,
-                                        cor = NA,
-                                        abse = NA),
+        test_df <- expand.grid(data_l = c(seq(671, ifelse(part_length < 2687, part_length, 2687), by = 3), 
+                                          ifelse(part_length < 2687, part_length, 2687)),
+                               move_l = seq(1, gap_length, by = 2))
+        
+        test_df <- bind_rows(data.frame(data_l = ifelse(part_length < 2687, part_length, 2687),
+                                        move_l = 0),
                              test_df)
         
         temp %>% slice((ii-maxdata_l):ii) %>% pull(at) -> att
-        # temp %>% slice(ii:(ii+167)) %>% pull(md) -> mdt
-        # 
-        # test_df[1,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-        # test_df[1,"abse"] <- mean(abs(mdt-att), na.rm = T)
         
         maxl <- max(test_df$data_l)
         
-        for(iii in 1:nrow(test_df)){
-          
+        splitting_cors <- function(iii){
           if(test_df[iii,"data_l"] == maxl){
             temp %>% slice((ii-maxl+test_df[iii,"move_l"]):(ii+test_df[iii,"move_l"])) %>%
               pull(md) -> mdt
@@ -1150,12 +1147,13 @@ for(i in unique(df4$site)){
               pull(md) -> mdt
           }
           
-          test_df[iii,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-          test_df[iii,"abse"] <- mean(abs(mdt-att), na.rm = T)
+          return((1-cor(mdt, att, use = "pairwise.complete.obs"))*mean(abs(mdt-att), na.rm = T))
           
         }
         
-        test_df %>% mutate(fac = (1-cor)*abse) %>% pull(fac) %>% which.min() -> result
+        test_df$fac <- unlist(lapply(1:nrow(test_df), splitting_cors))
+        
+        test_df %>% pull(fac) %>% which.min() -> result
         
         temp %>% pull(at) -> ats
         move <- ats[(ii-test_df[result,"data_l"]+1):ii]
@@ -1185,8 +1183,8 @@ df5 %>% filter(!is.na(site)) -> df5
 # BACKWARD
 
 df6 <- data.frame()
-for(i in unique(df3$site)){
-  # i <- 77
+for(i in unique(df5$site)){
+  # i <- "MAL012"
   
   print(i)
   print(Sys.time())
@@ -1198,6 +1196,9 @@ for(i in unique(df3$site)){
     full_join(., md) %>% 
     arrange(roundtime) %>% as.data.table() -> temp
   
+  # temp %>% filter(!is.na(at))
+  # temp[1,"timediff"] <- 30
+  
   splits <- which(temp$timediff > 30)
   
   if(length(splits) > 0){
@@ -1205,63 +1206,63 @@ for(i in unique(df3$site)){
       
       temp %>% slice(1:(ii-1)) %>% pull(at) %>% rev() -> ats
       
-      gap_length <- which.min(is.na(ats))-1
+      tibble(grps = rleid(is.na(ats))) %>% group_by(grps) %>% count() %>% pull(n) -> part_lengths
       
-      test_df <- expand.grid(data_l = 11:167,
-                             move_l = 1:gap_length,
-                             cor = NA,
-                             abse = NA)
+      gap_length <- part_lengths[1]
+      part_length <- part_lengths[2]
       
-      test_df <- bind_rows(data.frame(data_l = 167,
-                                      move_l = 0,
-                                      cor = NA,
-                                      abse = NA),
-                           test_df)
+      # gap_length <- which.min(is.na(ats))-1
       
-      temp %>% slice(ii:(ii+167)) %>% pull(at) -> att
-      # temp %>% slice(ii:(ii+167)) %>% pull(md) -> mdt
-      # 
-      # test_df[1,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-      # test_df[1,"abse"] <- mean(abs(mdt-att), na.rm = T)
-      
-      maxl <- max(test_df$data_l)
-      
-      for(iii in 1:nrow(test_df)){
+      if(gap_length >= 191 & part_length >= 191){
         
-        if(test_df[iii,"data_l"] == maxl){
-          temp %>% slice((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"])) %>%
-            pull(md) -> mdt
-        } else {
-          temp %>% slice(c((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"]),
-                           (ii+test_df[iii,"data_l"]+1):(ii+167))) %>%
-            pull(md) -> mdt
+        test_df <- expand.grid(data_l = c(seq(191, ifelse(part_length < 1343, part_length, 1343), by = 3), 
+                                          ifelse(part_length < 1343, part_length, 1343)),
+                               move_l = seq(1, gap_length, by = 2))
+        
+        test_df <- bind_rows(data.frame(data_l = ifelse(part_length < 1343, part_length, 1343),
+                                        move_l = 0),
+                             test_df)
+        
+        temp %>% slice(ii:(ii+ifelse(part_length < 1343, part_length, 1343))) %>% pull(at) -> att
+        
+        maxl <- max(test_df$data_l)
+        
+        splitting_cors <- function(iii){
+          if(test_df[iii,"data_l"] == maxl){
+            temp %>% slice((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"])) %>%
+              pull(md) -> mdt
+          } else {
+            temp %>% slice(c((ii-test_df[iii,"move_l"]):(ii-test_df[iii,"move_l"]+test_df[iii,"data_l"]),
+                             (ii+test_df[iii,"data_l"]+1):(ii+ifelse(part_length < 1343, part_length, 1343)))) %>%
+              pull(md) -> mdt
+          }
+          
+          return((1-cor(mdt, att, use = "pairwise.complete.obs"))*mean(abs(mdt-att), na.rm = T))
+          
         }
         
-        test_df[iii,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-        test_df[iii,"abse"] <- mean(abs(mdt-att), na.rm = T)
+        test_df$fac <- unlist(lapply(1:nrow(test_df), splitting_cors))
         
+        test_df %>% pull(fac) %>% which.min() -> result
+        
+        temp %>% pull(at) -> ats
+        move <- ats[ii:(ii+test_df[result,"data_l"])]
+        ats[ii:(ii+test_df[result,"data_l"])] <- NA
+        ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
+        temp$at <- ats
+        
+        temp %>% pull(arh) -> ats
+        move <- ats[ii:(ii+test_df[result,"data_l"])]
+        ats[ii:(ii+test_df[result,"data_l"])] <- NA
+        ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
+        temp$arh <- ats
       }
-      
-      test_df %>% mutate(fac = (1-cor)*abse) %>% pull(fac) %>% which.min() -> result
-      
-      temp %>% pull(at) -> ats
-      move <- ats[ii:(ii+test_df[result,"data_l"])]
-      ats[ii:(ii+test_df[result,"data_l"])] <- NA
-      ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
-      temp$at <- ats
-      
-      temp %>% pull(arh) -> ats
-      move <- ats[ii:(ii+test_df[result,"data_l"])]
-      ats[ii:(ii+test_df[result,"data_l"])] <- NA
-      ats[(ii-test_df[result,"move_l"]):(ii-test_df[result,"move_l"]+test_df[result,"data_l"])] <- move
-      temp$arh <- ats
-      
     }
   }
   
   temp$site <- i
   
-  df6 <- bind_rows(df6, temp %>% select(site, roundtime, at, arh, haxo_probl))
+  df6 <- bind_rows(df6, temp %>% select(site, roundtime, at, arh, hobo_probl))
   
 }
 
@@ -1270,8 +1271,8 @@ df6 %>% filter(!is.na(site)) -> df6
 # FORWARD
 
 df7 <- data.frame()
-for(i in unique(df4$site)){
-  # i <- 23
+for(i in unique(df6$site)){
+  # i <- "MAL012"
   
   print(i)
   print(Sys.time())
@@ -1288,34 +1289,32 @@ for(i in unique(df4$site)){
   if(length(splits) > 0){
     for(ii in splits){
       # ii <- 232
-      temp %>% slice((ii+1):nrow(.)) %>% pull(at) -> ats
+      temp %>% slice((ii+1):nrow(.)) %>% pull(at) -> ats_after
+      temp %>% slice(1:ii) %>% pull(at) %>% rev() -> ats_before
       
-      gap_length <- which.min(is.na(ats))-1
+      tibble(grps = rleid(is.na(ats_after))) %>% group_by(grps) %>% count() %>% pull(n) -> gap_lengths
+      tibble(grps = rleid(is.na(ats_before))) %>% group_by(grps) %>% count() %>% pull(n) -> part_lengths
       
-      if(gap_length > 3){
-        maxdata_l <- ifelse(gap_length < 83, gap_length, 83)
+      gap_length <- gap_lengths[1]
+      part_length <- part_lengths[1]
+      
+      if(gap_length >= 95 & part_length >= 191){
         
-        test_df <- expand.grid(data_l = 1:maxdata_l,
-                               move_l = 1:gap_length,
-                               cor = NA,
-                               abse = NA)
+        maxdata_l <- ifelse(part_length < 1343, part_length, 1343)
         
-        test_df <- bind_rows(data.frame(data_l = maxdata_l,
-                                        move_l = 0,
-                                        cor = NA,
-                                        abse = NA),
+        test_df <- expand.grid(data_l = c(seq(191, ifelse(part_length < 1343, part_length, 1343), by = 3), 
+                                          ifelse(part_length < 1343, part_length, 1343)),
+                               move_l = seq(1, gap_length, by = 2))
+        
+        test_df <- bind_rows(data.frame(data_l = ifelse(part_length < 1343, part_length, 1343),
+                                        move_l = 0),
                              test_df)
         
         temp %>% slice((ii-maxdata_l):ii) %>% pull(at) -> att
-        # temp %>% slice(ii:(ii+167)) %>% pull(md) -> mdt
-        # 
-        # test_df[1,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-        # test_df[1,"abse"] <- mean(abs(mdt-att), na.rm = T)
         
         maxl <- max(test_df$data_l)
         
-        for(iii in 1:nrow(test_df)){
-          
+        splitting_cors <- function(iii){
           if(test_df[iii,"data_l"] == maxl){
             temp %>% slice((ii-maxl+test_df[iii,"move_l"]):(ii+test_df[iii,"move_l"])) %>%
               pull(md) -> mdt
@@ -1325,12 +1324,13 @@ for(i in unique(df4$site)){
               pull(md) -> mdt
           }
           
-          test_df[iii,"cor"] <- cor(mdt, att, use = "pairwise.complete.obs")
-          test_df[iii,"abse"] <- mean(abs(mdt-att), na.rm = T)
+          return((1-cor(mdt, att, use = "pairwise.complete.obs"))*mean(abs(mdt-att), na.rm = T))
           
         }
         
-        test_df %>% mutate(fac = (1-cor)*abse) %>% pull(fac) %>% which.min() -> result
+        test_df$fac <- unlist(lapply(1:nrow(test_df), splitting_cors))
+        
+        test_df %>% pull(fac) %>% which.min() -> result
         
         temp %>% pull(at) -> ats
         move <- ats[(ii-test_df[result,"data_l"]+1):ii]
@@ -1350,12 +1350,11 @@ for(i in unique(df4$site)){
   
   temp$site <- i
   
-  df7 <- bind_rows(df7, temp %>% select(site, roundtime, at, arh, haxo_probl))
+  df7 <- bind_rows(df7, temp %>% select(site, roundtime, at, arh, hobo_probl))
   
 }
 
 df7 %>% filter(!is.na(site)) -> df7
-
 
 # TRIM WITH THE LAST DAY ON FIELD
 
