@@ -413,4 +413,147 @@ d1 %>% as.data.table() %>% sample_n(10)
 # Write results to csv
 write_csv(d1, "output/snow_variables.csv")
 
+################################################################################
+# HAXO & HOBO DATA
+
+d <- read_csv("output/T4_combined.csv") %>% 
+  rename(T4 = at)
+
+# Change the datetime to Finnish time
+# This takes some time...
+d %>% mutate(datetime = ymd_hms(datetime, tz = "UTC")) %>% 
+  mutate(datetime = with_tz(datetime, tzone = "Etc/GMT-2")) -> d
+
+# Add date column
+d %>% mutate(date = as_date(datetime)) %>% 
+  relocate(date, .after = datetime) -> d
+
+# Fill missing observations (max length of three consecutive NAs) with running average
+# Linear interpolation
+d %>% group_by(site) %>% 
+  mutate(across(c(T4,arh), ~na.approx(.x, datetime, maxgap = 3, na.rm = F))) -> d
+
+########################################################################
+# AGGREGATE TO DAILY VALUES
+
+# Function to summarize column types
+what_logger <- function(x){
+  xx <- na.omit(unique(x))
+  if(length(xx) > 1){
+    return("b")
+  } else {
+    return(xx[1])
+  }
+}
+
+# Function to determine the proportion of non-NA values
+notNA_prop <- function(x){ round(sum(is.finite(x)/length(x))*100,1) }
+
+d %>% group_by(site, date) %>%
+  summarise(across(c(T4,arh), ~notNA_prop(.x), 
+                   na.rm = F, .names = "{.col}_prop"),
+            across(c(T4,arh), list(mean = mean, min = min, max = max), 
+                   na.rm = T, .names = "{.col}_{.fn}"),
+            probl = max(probl, na.rm = T),
+            logger = what_logger(logger)) %>% 
+  ungroup() -> daily
+
+# Change Inf and -Inf to NA
+infmutate <- function(x) ifelse(is.infinite(x),NA,x)
+daily %>% mutate(across(T4_prop:probl, infmutate)) -> daily
+
+# Write daily data
+write_csv(daily, "output/T4_data_daily.csv")
+
+########################################################################
+# MONTHLY DATA
+
+# Create a matrix of number of days in each calender month
+daycount <- data.frame(date = c(as_date(as_date("2018-01-01"):as_date("2021-12-31")))) %>% 
+  mutate(month = month(date),
+         year = year(date)) %>% 
+  group_by(year, month) %>% 
+  summarise(ndaysmax = n())
+
+# Aggregation to monthly values is done separately for each sensors 
+# due to different filtering based on error codes
+
+# First T4
+daily %>% 
+  filter(T4_prop == 100,
+         probl %in% c(0),
+         is.finite(T4_mean)) %>% 
+  mutate(month = month(date),
+         year = year(date)) %>% 
+  group_by(site, year, month) %>% 
+  summarise(logger = what_logger(logger),
+            ndays = n(),
+            T4_mean = round(mean(T4_mean, na.rm = T),2),
+            T4_absmax = round(max(T4_max, na.rm = T),2),
+            T4_absmin = round(min(T4_min, na.rm = T),2),
+            T4_meanmax = round(mean(T4_max, na.rm = T),2),
+            T4_meanmin = round(mean(T4_min, na.rm = T),2)) %>% 
+  left_join(., daycount) %>% 
+  mutate(day_frac_T4 = ndays/ndaysmax) %>% 
+  relocate(day_frac_T4, .after = ndays) %>% 
+  ungroup() %>% select(-ndaysmax,-ndays) -> dm_T4
+
+# arh
+daily %>% 
+  filter(arh_prop == 100,
+         probl %in% c(0),
+         is.finite(arh_mean)) %>% 
+  mutate(month = month(date),
+         year = year(date)) %>% 
+  group_by(site, year, month) %>% 
+  summarise(ndays = n(),
+            arh_sd = round(sd(arh_mean, na.rm = T),2),
+            arh_cv = round(sd(arh_mean, na.rm = T)/mean(arh_mean, na.rm = T),2),
+            arh_med = round(median(arh_mean, na.rm = T),1),
+            arh_mean = round(mean(arh_mean, na.rm = T),1),
+            arh_absmax = round(max(arh_max, na.rm = T),1),
+            arh_absmin = round(min(arh_min, na.rm = T),1)) %>% 
+  left_join(., daycount) %>% 
+  mutate(day_frac_arh = ndays/ndaysmax) %>% 
+  relocate(day_frac_arh, .after = ndays) %>% 
+  ungroup() %>% select(-ndaysmax,-ndays) -> dm_arh
+
+full_join(dm_T4, dm_arh) %>% 
+  mutate(across(starts_with("day_f"), ~ifelse(!is.finite(.x), 0, .x))) %>% 
+  relocate(starts_with("day_f"), .after = month) -> dm
+
+
+# Monthly thermal sums
+
+# First T4
+daily %>% 
+  filter(T4_prop == 100,
+         probl %in% c(0),
+         is.finite(T4_mean)) %>% 
+  mutate(month = month(date),
+         year = year(date)) %>% 
+  group_by(site, year, month) %>% 
+  summarise(ndays = n(),
+            T4_TDD = round(sum(ifelse(T4_mean < 0, 0, T4_mean), na.rm = T),2),
+            T4_GDD3 = round(sum(ifelse(T4_mean < 3, 0, T4_mean), na.rm = T),2),
+            T4_GDD5 = round(sum(ifelse(T4_mean < 5, 0, T4_mean), na.rm = T),2),
+            T4_FDD = round(sum(ifelse(T4_mean > 0, 0, T4_mean), na.rm = T),2),
+            T4_TDD_days = round(sum(ifelse(T4_mean < 0, 0, 1), na.rm = T),2),
+            T4_GDD3_days = round(sum(ifelse(T4_mean < 3, 0, 1), na.rm = T),2),
+            T4_GDD5_days = round(sum(ifelse(T4_mean < 5, 0, 1), na.rm = T),2),
+            T4_FDD_days = round(sum(ifelse(T4_mean > 0, 0, 1), na.rm = T),2)) %>% 
+  left_join(., daycount) %>% 
+  mutate(day_frac_T4 = ndays/ndaysmax) %>% 
+  relocate(day_frac_T4, .after = ndays) %>% 
+  ungroup() %>% select(-ndaysmax,-ndays) -> dm_T4
+
+dm_T4 %>% 
+  mutate(across(starts_with("day_f"), ~ifelse(!is.finite(.x), 0, .x))) %>% 
+  relocate(starts_with("day_f"), .after = month) -> dm_dd
+rm(dm_T4)
+
+dm <- full_join(dm, dm_dd)
+
+write_csv(dm, "output/T4_data_monthly.csv")
+
 
