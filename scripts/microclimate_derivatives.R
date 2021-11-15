@@ -11,8 +11,7 @@ d <- read_csv("output/tomst_data.csv")
 
 # Change the datetime to Finnish time
 # This takes some time...
-d %>% mutate(datetime = ymd_hms(datetime, tz = "UTC")) %>% 
-  mutate(datetime = with_tz(datetime, tzone = "Etc/GMT-2")) -> d
+d %>% mutate(datetime = with_tz(datetime, tzone = "Etc/GMT-2")) -> d
 
 # Add date column
 d %>% mutate(date = as_date(datetime)) %>% 
@@ -247,11 +246,12 @@ daily %>% group_by(site) %>%
          lag_t = ifelse(lag_t < 1 & lag_range < 10, 1, 0)) %>% 
   mutate(lead_c = rollapply(center_t, width=5, FUN=max, fill = NA, partial = T, align = "right"),
          lag_c = rollapply(center_t, width=5, FUN=max, fill = NA, partial = T, align = "left")) %>% 
-  rowwise() %>% mutate(center_c = max(c(lead_c, lag_c))) -> dd
+  rowwise() %>% mutate(center_c = max(c(lead_c, lag_c))) %>% 
+  mutate(hydro_year = year(date + days(122))) -> dd
 
 # Plot an example
 
-id_to_plot <- "AIL155"
+id_to_plot <- "MAL001"
 
 dd %>% filter(site == id_to_plot) %>%
   ggplot(aes_string(x="date")) +
@@ -265,8 +265,7 @@ dd %>% filter(site == id_to_plot) %>%
   ggtitle(id_to_plot)
 
 # Determine the length of snow periods
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   mutate(grp = rleid(center_c)) %>% 
   group_by(site, grp, hydro_year) %>% 
   summarise(n = n(),
@@ -277,9 +276,17 @@ dd %>% mutate(hydro_year = year(date + days(122))) %>%
             max_snow_period = max(n),
             n_snow_period = n()) -> d1
 
+# Count days in hydro_year
+dd %>% group_by(site, hydro_year) %>% 
+  summarise(days_in_hydro_year = sum(!is.na(T2_min)),
+            first_day_in_hydro_year = min(yday(date + days(122))),
+            last_day_in_hydro_year = max(yday(date + days(122)))) -> d1_2
+
+d1 <- full_join(d1,d1_2) %>% 
+  relocate(days_in_hydro_year:last_day_in_hydro_year, .after = hydro_year)
+
 # Determine first and last dates with snow cover
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   filter(center_c == 1) %>% 
   summarise(first_snow_date = min(date),
             last_snow_date = max(date)) %>% 
@@ -321,11 +328,12 @@ daily %>% group_by(site) %>%
          lead_T3 = rollapply(T3_snow, width=5, FUN=max, fill = NA, partial = T, align = "right"),
          lag_T3 = rollapply(T3_snow, width=5, FUN=max, fill = NA, partial = T, align = "left")) %>% 
   rowwise() %>% mutate(T2_snow = max(c(lead_T2, lag_T2)),
-                       T3_snow = max(c(lead_T3, lag_T3))) -> dd
+                       T3_snow = max(c(lead_T3, lag_T3))) %>% 
+  mutate(hydro_year = year(date + days(122))) -> dd
 
 
 # Plot an example site
-id_to_plot <- "AIL155"
+id_to_plot <- "MAL001"
 
 dd %>% filter(site == id_to_plot) %>%
   ggplot(aes_string(x="date")) +
@@ -338,10 +346,8 @@ dd %>% filter(site == id_to_plot) %>%
   ggtitle(id_to_plot)
 
 
-
 # Determine the length of deep snow periods T2
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   mutate(grp = rleid(T2_snow)) %>% 
   group_by(site, grp, hydro_year) %>% 
   summarise(n = n(),
@@ -353,16 +359,14 @@ dd %>% mutate(hydro_year = year(date + days(122))) %>%
             n_deep_snow_period_T2 = n()) -> d5
 
 # Determine first and last dates with deep snow cover T2
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   filter(T2_snow == 1) %>% 
   summarise(first_deep_snow_date_T2 = min(date),
             last_deep_snow_date_T2 = max(date)) %>% 
   mutate(last_deep_snow_doy_T2 = yday(last_deep_snow_date_T2)) -> d6
 
 # Determine the length of deep snow periods T3
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   mutate(grp = rleid(T3_snow)) %>% 
   group_by(site, grp, hydro_year) %>% 
   summarise(n = n(),
@@ -374,8 +378,7 @@ dd %>% mutate(hydro_year = year(date + days(122))) %>%
             n_deep_snow_period_T3 = n()) -> d7
 
 # Determine first and last dates with deep snow cover T3
-dd %>% mutate(hydro_year = year(date + days(122))) %>% 
-  group_by(site, hydro_year) %>% 
+dd %>% group_by(site, hydro_year) %>% 
   filter(T3_snow == 1) %>% 
   summarise(first_deep_snow_date_T3 = min(date),
             last_deep_snow_date_T3 = max(date)) %>% 
@@ -406,7 +409,8 @@ d1 %>% mutate(deep_snow_days_T3 = ifelse(is.na(deep_snow_days_T3) & T2_ft > 0, 0
               n_deep_snow_period_T3 = ifelse(is.na(n_deep_snow_period_T3) & T2_ft > 0, 0, n_deep_snow_period_T3),
               last_deep_snow_doy_T3 = ifelse(is.na(last_deep_snow_doy_T3) & T2_ft > 0, 0, last_deep_snow_doy_T3)) -> d1
 
-# d1 %>% filter(hydro_year > 2019) -> d1
+# Filter only data with enough days within hydro year
+d1 %>% filter(days_in_hydro_year > 300) -> d1
 
 d1 %>% as.data.table() %>% sample_n(10)
 
